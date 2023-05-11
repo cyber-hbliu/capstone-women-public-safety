@@ -14,7 +14,7 @@ Gender power relations are constantly being rearranged, reshaped, embodied, and 
 
 It is unacceptable that women should be forced to give up their right to access public spaces out of fear. For example, female cyclists are more concerned about overall safety than male cyclists. Additionally, it has an impact on women’s activity duration, which means women are able to remain outside until late in the evening without feeling anxious or depressed because of the darkness. 
 
-Therefore, the requirements for women’s safety must be taken into consideration when developing infrastruc- ture. Characteristics providing prospect, escape, and sufficient lighting should already be considered at the early stage of infrastructure planning. 
+Therefore, the requirements for women’s safety must be taken into consideration when developing infrastructure. Characteristics providing prospect, escape, and sufficient lighting should already be considered at the early stage of infrastructure planning. 
 
 A good public space atmosphere in a neighborhood has, from the point of view of giving women a sense of being safe and comfortable, the following characteristics:
 - Sufficient illumination: Street lighting affects people’s perception of safety, and people prefer the light in their own surroundings. Proper street lighting is a major factor in enhancing street safety. Research showed that fears in relation to these features might be reflected on campuses and public spaces (‘Hot spots’ of fear and crime), where policy calls for the lighting of dark pathways, and lighting and cameras in parking lots.
