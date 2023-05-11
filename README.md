@@ -1,3 +1,6 @@
+# Storymap
+Click (here)[https://storymaps.arcgis.com/stories/370a10688d2c4874bdc5ddd57467f6b5] to check out project storymap
+
 # Intro
 
 This is a project for CPLN6800 at UPenn. The purpose of my capstone project is to understang the association between between infrastructure and women’s public safety in New York City. 
