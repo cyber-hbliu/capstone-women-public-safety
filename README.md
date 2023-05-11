@@ -3,7 +3,7 @@ Click [here](https://storymaps.arcgis.com/stories/370a10688d2c4874bdc5ddd57467f6
 
 # Intro
 
-This is a project for CPLN6800 at UPenn. The purpose of my capstone project is to understang the association between between infrastructure and women’s public safety in New York City. 
+This is a project for CPLN6800 at UPenn. The purpose of my capstone project is to understang the association between infrastructure and women’s public safety in New York City. 
 
 In new york city, unfortunately, there were more than 200 thousand incidents of violence against women during 730 days. And 25.88% of incidents happended in public places. So I focused on 25.88%, which means the location of crime, in open areas and transportation places. In 2022, a UK National Statistics survey showed that 32% of women feel unsafe in public spaces at night. Also, women were 10% more likely than men feel unsafe in subway. 
 
