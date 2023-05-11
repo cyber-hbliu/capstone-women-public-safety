@@ -19,10 +19,10 @@ Therefore, the requirements for women’s safety must be taken into consideratio
 A good public space atmosphere in a neighborhood has, from the point of view of giving women a sense of being safe and comfortable, the following characteristics:
 - Sufficient illumination: Street lighting affects people’s perception of safety, and people prefer the light in their own surroundings. Proper street lighting is a major factor in enhancing street safety. Research showed that fears in relation to these features might be reflected on campuses and public spaces (‘Hot spots’ of fear and crime), where policy calls for the lighting of dark pathways, and lighting and cameras in parking lots.
 
-- Openness: Unobstructed views and ample space with good all-around vis- 35 ibility ensure safety ahead.
+- Openness: Unobstructed views and ample space with good all-around visibility ensure safety ahead.
 
 - Utilizing public facilities freely: It refers to the freedom to use public amenities like public restrooms, take public transit, walk alone, ride a bicycle, and so on.
-Social Interaction: Activities are accessible for women within walking 40 distance. It takes a lot of energy for women to address safety issues before they
+Social Interaction: Activities are accessible for women within walking distance. It takes a lot of energy for women to address safety issues before they
 can start enjoying a safe, active lifestyle.
 
 # Analysis
