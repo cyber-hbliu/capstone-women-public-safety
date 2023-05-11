@@ -1,5 +1,5 @@
 # Storymap
-Click (here)[https://storymaps.arcgis.com/stories/370a10688d2c4874bdc5ddd57467f6b5] to check out project storymap
+Click [here](https://storymaps.arcgis.com/stories/370a10688d2c4874bdc5ddd57467f6b5) to check out project storymap
 
 # Intro
 
