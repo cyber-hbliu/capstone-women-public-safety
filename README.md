@@ -1,11 +1,11 @@
 # Storymap
-Click [here](https://storymaps.arcgis.com/stories/370a10688d2c4874bdc5ddd57467f6b5) to check out project storymap, better display in laptop.
+Click [here](https://storymaps.arcgis.com/stories/370a10688d2c4874bdc5ddd57467f6b5) to check out the project storymap, better displays on a laptop.
 
 # Intro
 
-This is a project for CPLN6800 at UPenn. The purpose of my capstone project is to understang the association between infrastructure and women’s public safety in New York City. 
+This is a project for CPLN6800 at UPenn. The purpose of my capstone project is to understand the association between infrastructure and women’s public safety in New York City. 
 
-In new york city, unfortunately, there were more than 200 thousand incidents of violence against women during 730 days. And 25.88% of incidents happended in public places. So I focused on 25.88%, which means the location of crime, in open areas and transportation places. In 2022, a UK National Statistics survey showed that 32% of women feel unsafe in public spaces at night. Also, women were 10% more likely than men feel unsafe in subway. 
+In New York City, unfortunately, there were more than 200 thousand incidents of violence against women during 730 days. And 25.88% of incidents happened in public places. So I focused on 25.88%, which means the location of crime, in open areas and transportation places. In 2022, a UK National Statistics survey showed that 32% of women feel unsafe in public spaces at night. Also, women were 10% more likely than men to feel unsafe in the subway. 
 
 # Background
 According to James Scott’s theory in 1988 and Michael Mann’s concept of infrastructure power in 1984, infrastructure is one of the primary instruments the state uses to organize society. There are many different forms of infrastructural violence and gender inequality in the way that our cities are planned. 
@@ -26,9 +26,9 @@ Social Interaction: Activities are accessible for women within walking distance.
 can start enjoying a safe, active lifestyle.
 
 # Analysis
-So in my study, I took serveral features into consideration: pavement condition related to walking experience, broken streetlight related to dark street at night, vacant buildings related to insecure surroundings, and access to transportation places. 
+So in my study, I considered several features: pavement condition related to walking experience, broken streetlights related to dark streets at night, vacant buildings related to insecure surroundings, and access to transportation places. 
 
-Then I found some correlation between those factors and number of crimes. Correlation does not imply causation, but the closer women are to these areas, the higher the probability of an accident. Additionally, public crime impact on public life. Accessibility to public facilities and women's supportive resources are also included in my study. 
+Then I found some correlation between those factors and the number of crimes. Correlation does not imply causation, but the closer women are to these areas, the higher the probability of an accident. Additionally, public crime impacts on public life. Accessibility to public facilities and women's supportive resources are also included in my study. 
 
 # Discussion
 Statistics can help us figure out the critical factors in violent incidents. But we can conclude slightly different perspectives by different methods. Indeed, criminology is complicated by human factors. Spatial analysis can dig out invisible truth but is limited. My study is a reference for those who are working as decision-makers or urban development advocates in order to design a city that works for women. 
