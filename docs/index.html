@@ -231,7 +231,7 @@ footer a{color:var(--ink)}
   <div class="wrap">
     <div class="narrow">
       <p class="eyebrow">04 · What correlates</p>
-      <h2>What survives spatial correction</h2>
+      <h2>Spatial correction</h2>
       <p>Bivariate correlations are confounded: streetlight outages rise with street length (r = 0.62) and tract area (r = 0.52), and renter share is entangled with subway distance (r = −0.58) and poverty (r = 0.55). Tract counts are also severely overdispersed (variance-to-mean ratio: 166), and the aspatial negative binomial model leaves spatially autocorrelated residuals (Moran's I = 0.164). Adding a Markov random field smooth over the tract adjacency graph eliminates the spatial dependence (residual I = −0.034, p = 0.997) and raises deviance explained to 73.9%.</p>
       <p>In the spatial model, per one standard deviation of each predictor:</p>
     </div>
@@ -255,9 +255,9 @@ footer a{color:var(--ink)}
   <div class="wrap">
     <div class="narrow">
       <p class="eyebrow">05 · The panel test</p>
-      <h2>Temporary darkness has no detectable effect within tracts</h2>
-      <p>The cross-section says tracts with more streetlight outages record more incidents. The panel asks whether a tract's incident count moves when its own lighting changes: a fixed-effects Poisson model over 2,228 tracts × 59 months, with each outage weighted by the number of days it remains open in the month.</p>
-      <p>The pooled model, without tract fixed effects, returns positive and significant coefficients for all four own-tract darkness lags (contemporaneous β = 0.050). With tract, year, and calendar-month fixed effects, no own-tract coefficient differs from zero (contemporaneous β = 0.001, p = 0.74). An event study around closures of outages lasting at least 30 days shows no association at the lead or any of the four event-time terms (all p &gt; 0.14) — and the design can exclude closure effects larger than approximately ±1.3% per month.</p>
+      <h2> A fixed-effects Poisson model</h2>
+      <p>The pooled distributed-lag model, estimated without tract fixed effects, returned positive and significant coefficients for all four own-tract darkness lags (contemporaneous β = 0.050, p < 0.001). With tract, year, and calendar-month fixed effects, the own-tract coefficient did not differ from zero (contemporaneous β = 0.001, p = 0.74).</p>
+      <p> Within-tract variation in darkness (mean within-tract SD = 1.34) was similar to between-tract variation (SD of tract means = 1.26). Incorporating monthly 311 complaint flows as reporting-propensity controls left all estimates essentially unchanged. The contemporaneous spatial lag remained significant across all specifications (β = 0.024, p < 0.001; β = 0.023 with controls), with a smaller coefficient at the third lag (β = 0.018, p = 0.007) and null coefficients at the first and second lags.</p>
     </div>
     <div class="figrow">
       <figure class="plate"><img src="assets/fig12.png" loading="lazy" alt="Coefficient plot of dark lamp-day effects by lag, pooled versus fixed-effects Poisson; fixed-effects estimates are null"><figcaption><b>Fig. 12</b> — Own-tract darkness by lag: pooled vs. fixed-effects Poisson. The association vanishes within tracts.</figcaption></figure>
