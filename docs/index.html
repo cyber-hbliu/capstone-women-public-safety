@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infrastructure Conditions and the Spatial Distribution of Public-Space Offenses in New York City, 2021–2025</title>
+<meta name="description" content="Where public-space offenses concentrate in New York City, which infrastructure and socioeconomic conditions are associated with them after spatial correction, and what a five-year panel of streetlight outages shows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* palette from the analysis pipeline's R theme */
+  --paper:#F4F1EA;
+  --ink:#1F1B16;
+  --ink-soft:#6B6256;
+  --grid:#DED8CC;
+  --female:#C0306B;   /* magenta  */
+  --day:#F2CE72;      /* yellow   */
+  --peri:#737AC9;     /* night blue (data) */
+  --line:rgba(31,27,22,.16);
+  --display:'Fraunces',Georgia,serif;
+  --body:'Archivo',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{font-family:var(--body);font-size:1.0625rem;line-height:1.7;color:var(--ink);background:var(--paper)}
+a{color:inherit;text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible{outline:2px solid var(--female);outline-offset:3px}
+img{max-width:100%;height:auto;display:block}
+
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+.narrow{max-width:660px;margin:0 auto}
+
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--female)}
+
+h1,h2{font-family:var(--display);letter-spacing:-.01em}
+h2{font-size:clamp(1.6rem,3.2vw,2.25rem);font-weight:700;line-height:1.18;margin:.6rem 0 1.2rem}
+p{margin-bottom:1.1rem}
+p:last-child{margin-bottom:0}
+::selection{background:var(--female);color:var(--paper)}
+section{padding:5.5rem 0}
+
+/* ---------- hero ---------- */
+.hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 0 4rem}
+.hero h1{font-size:clamp(1.9rem,4.6vw,3.4rem);font-weight:700;line-height:1.16;max-width:17em;color:var(--ink)}
+.hero h1 em{font-style:normal;color:var(--female)}
+.hero .sub{font-size:clamp(1.05rem,1.7vw,1.2rem);max-width:38em;margin-top:1.4rem;color:var(--ink-soft)}
+.hero .byline{font-family:var(--mono);font-size:.78rem;margin-top:2.2rem;color:var(--ink-soft)}
+.hero .byline a{color:var(--ink)}
+.statstrip{display:flex;flex-wrap:wrap;gap:2.4rem;margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--line)}
+.stat{font-family:var(--mono)}
+.stat b{display:block;font-size:clamp(1.4rem,2.8vw,2rem);font-weight:500;color:var(--ink)}
+.stat span{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.stat.hot b{color:var(--female)}
+
+/* ---------- day–night ramp: the pipeline's own colour scale, as a divider rule ---------- */
+.dusk{position:relative;height:8px;max-width:1060px;margin:0 auto;
+  background:linear-gradient(to right,#FBF0CE 0%,#F2CE72 22%,#D9B79A 45%,#B196BC 65%,#737AC9 84%,#2E2F5C 100%)}
+.dusk.reverse{background:linear-gradient(to right,#2E2F5C 0%,#737AC9 16%,#B196BC 35%,#D9B79A 55%,#F2CE72 78%,#FBF0CE 100%)}
+.dusk .tag{position:absolute;left:50%;top:100%;transform:translateX(-50%);margin-top:.6rem;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);white-space:nowrap}
+
+/* ---------- figure plates: same background the figures were rendered on ---------- */
+.plate{background:var(--paper);border:1px solid var(--grid);padding:1.2rem 1.2rem .9rem}
+.plate figcaption{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;color:var(--ink-soft);margin-top:.8rem;line-height:1.55}
+.plate figcaption b{color:var(--female);font-weight:500}
+
+/* ---------- scrolly ---------- */
+.scrolly{display:grid;grid-template-columns:minmax(280px,5fr) 7fr;gap:3rem;align-items:start}
+.scrolly .sticky{position:sticky;top:9vh}
+.scrolly .frame{position:relative;aspect-ratio:3/2}
+.scrolly .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .45s ease}
+.scrolly .frame img.on{opacity:1}
+.scrolly .steps{padding:12vh 0 30vh}
+.step{min-height:64vh;display:flex;align-items:center;opacity:.35;transition:opacity .35s ease}
+.step.on{opacity:1}
+.step .card{max-width:26em}
+.step h3{font-family:var(--display);font-weight:600;font-size:1.25rem;margin-bottom:.6rem;color:var(--female)}
+.step p{font-size:1rem;color:var(--ink)}
+.step .k{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft)}
+
+/* ---------- generic figure rows ---------- */
+.figrow{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin:2.4rem 0}
+.fig-single{margin:2.4rem 0}
+
+/* ---------- callouts ---------- */
+.callout{border-left:3px solid var(--female);padding:.4rem 0 .4rem 1.4rem;margin:2.4rem 0;
+  font-family:var(--display);font-weight:600;font-size:1.35rem;line-height:1.45}
+.callout .k{display:block;font-family:var(--mono);font-weight:400;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;margin-top:.8rem}
+.callout .k{color:var(--ink-soft)}
+.bignum{font-family:var(--mono);font-weight:500}
+.bignum{color:var(--female)}
+
+/* legend chips */
+.chips{display:flex;flex-direction:column;gap:1rem;margin:2rem 0;font-family:var(--mono);font-size:.85rem}
+.chip{display:flex;align-items:baseline;gap:.6rem}
+.chip i{width:.7rem;height:.7rem;flex:none;transform:translateY(1px)}
+.chip .v{font-size:1.2rem}
+
+/* ---------- footer ---------- */
+footer{background:var(--paper);color:var(--ink-soft);border-top:1px solid var(--line);padding:4rem 0 5rem;font-size:.9rem}
+footer h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--female);margin-bottom:1rem;font-weight:500}
+footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:3rem}
+footer p{margin-bottom:.8rem}
+footer a{color:var(--ink)}
+.refs{font-size:.82rem;line-height:1.55}
+.refs p{margin-bottom:.7rem}
+
+@media (max-width:820px){
+  section{padding:4rem 0}
+  .scrolly{display:block}
+  .scrolly .sticky{top:2vh;z-index:2;background:var(--paper);padding:.6rem 0}
+  .scrolly .steps{padding:6vh 0 10vh}
+  .step{min-height:52vh}
+  .figrow{grid-template-columns:1fr}
+  footer .cols{grid-template-columns:1fr}
+  .statstrip{gap:1.4rem 2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HERO (night) ================= -->
+<header class="hero night">
+  <div class="wrap">
+    <p class="eyebrow">NYPD complaint data · 2021–2025 · census-tract analysis</p>
+    <h1>Infrastructure Conditions and the Spatial Distribution of <em>Public-Space Offenses</em> in New York City, 2021–2025</h1>
+    <p class="sub">Where 396,876 incidents with person victims concentrate, which infrastructure and socioeconomic conditions are associated with that concentration after spatial correction, and whether the duration of damaged streetlights is associated with the number of incidents.</p>
+    <p class="byline">Hebe Liu · <a href="https://www.cyberhbl.com">cyberhbl.com</a> · rebuilt from a 2023 MUSA capstone, University of Pennsylvania</p>
+    <div class="statstrip">
+      <div class="stat"><b>396,876</b><span>incidents with person victims</span></div>
+      <div class="stat"><b>2,243</b><span>census tracts</span></div>
+      <div class="stat hot"><b>42.7%</b><span>occur in darkness</span></div>
+      <div class="stat"><b>59</b><span>months of panel data</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="dusk reverse" aria-hidden="true"><span class="tag">civil dawn</span></div>
+
+<!-- ================= 1. THE QUESTION (day) ================= -->
+<section class="day">
+  <div class="wrap narrow">
+    <p class="eyebrow">01 · The question</p>
+    <h2>The fear is measurable. Is the geography?</h2>
+    <p>Women's experiences in public spaces differ from men's, and the disparity is measurable. A 2022 UK national survey found that 32% of women felt unsafe in public spaces after dark (Elkin 2022). A study of 28 global cities found that women were approximately 10% more likely than men to feel unsafe in metro systems (Ouali et al. 2020). Fear of being unsafe undermines women's confidence and limits their social lives (Koskela 1997), and this fear is spatially patterned (Valentine 1989): women frequently manage perceived risk by avoiding "dangerous places" at "dangerous times," so public space becomes temporally segregated.</p>
+    <p>Whether that fear aligns with the actual spatial distribution of offenses and harm — and whether urban infrastructure conditions in public space are levers on that harm — are empirical questions this analysis takes up. It examines public-space incidents with recorded person victims in NYPD complaint data from 2021 to 2025, disaggregated by victim gender, joined with six infrastructure indicators (streetlight outages, pavement condition, sidewalk defects, subway distance, vacant land, abandoned buildings) and ACS socioeconomic context.</p>
+    <p>Three objectives structure what follows: characterize the temporal and spatial patterns of public-space offenses over five years; estimate which infrastructure features and socioeconomic factors are associated with the concentration of offenses across tracts after correcting for spatial autocorrelation, including whether the correlations differ for female victims; and test whether the duration of damaged streetlights — 145,598 outage records from 311 — is associated with the number of incidents.</p>
+  </div>
+</section>
+
+<div class="dusk" aria-hidden="true"><span class="tag">civil dusk · 42.7% of incidents occur past this line</span></div>
+
+<!-- ================= 2. WHERE (night, scrolly) ================= -->
+<section class="night" id="where">
+  <div class="wrap">
+    <p class="eyebrow">02 · Where it happens</p>
+    <h2 style="max-width:18em">A single connected region, from the South Bronx and Harlem to Midtown</h2>
+    <div class="scrolly">
+      <div class="steps">
+        <div class="step on" data-fig="0">
+          <div class="card">
+            <h3>Incidents cluster strongly</h3>
+            <p>Public-space incidents concentrate in Midtown Manhattan and extend into Harlem and the South Bronx, with secondary clusters in Downtown Brooklyn, Jamaica Center and Flushing's Main Street in Queens, and Coney Island's commercial district.</p>
+            <p class="k">Global Moran's I = 0.510, p &lt; 0.001</p>
+          </div>
+        </div>
+        <div class="step" data-fig="1">
+          <div class="card">
+            <h3>368 hot spots, 502 cold spots</h3>
+            <p>Getis-Ord Gi* identifies hot spots concentrated in Manhattan's commercial areas, extending into Harlem and the South Bronx, while cold spots sit in Staten Island, southern Brooklyn, and eastern Queens.</p>
+            <p class="k">Getis-Ord Gi*, tract level</p>
+          </div>
+        </div>
+        <div class="step" data-fig="2">
+          <div class="card">
+            <h3>Connected, not scattered</h3>
+            <p>The High-High group is a single connected region running down Manhattan's commercial areas from the South Bronx and Harlem to Midtown. The Low-Low group comprises low-density, car-oriented residential areas away from subways. The few spatial outliers are isolated nodes in quiet surroundings, or in parks and institutional areas.</p>
+            <p class="k">LISA · pseudo p &lt; 0.0001 for core clusters</p>
+          </div>
+        </div>
+      </div>
+      <div class="sticky">
+        <figure class="plate">
+          <div class="frame">
+            <img src="assets/fig02.png" class="on" alt="Choropleth map of public-space incident counts by census tract, New York City, 2021 to 2025" data-cap="<b>Fig. 2</b> — Public-space incidents by census tract, 2021–2025.">
+            <img src="assets/fig03.png" loading="lazy" alt="Map of Getis-Ord Gi* hot and cold spots of public-space incidents" data-cap="<b>Fig. 3</b> — Hot and cold spots (Getis-Ord Gi*): 368 hot, 502 cold.">
+            <img src="assets/fig05.png" loading="lazy" alt="LISA cluster map showing a connected High-High region through Manhattan and the South Bronx" data-cap="<b>Fig. 5</b> — LISA clusters: a single connected High-High region.">
+          </div>
+          <figcaption id="scrolly-cap"><b>Fig. 2</b> — Public-space incidents by census tract, 2021–2025.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. WHO AND WHEN (night) ================= -->
+<section class="night">
+  <div class="wrap">
+    <div class="narrow">
+      <p class="eyebrow">03 · Who, and when</p>
+      <h2>Victim sex and timing vary sharply by offense type</h2>
+      <p>Assault-related offenses are the largest category of public-space incidents (23.5%), followed by harassment (20.3%); sex crimes and rape together comprise about 2.2%. But victim sex varies markedly by offense type — and the most severe and gendered harms are concentrated in darkness.</p>
+    </div>
+    <div class="callout narrow">
+      Rape: <span class="bignum">98%</span> female victims, <span class="bignum">67%</span> occurring in darkness.
+      <span class="k">The offense most strongly associated with darkness, followed by robbery (56%) and motor-vehicle theft (51%). Harassment and kidnapping predominantly occur during daytime.</span>
+    </div>
+    <div class="figrow">
+      <figure class="plate"><img src="assets/fig07.png" loading="lazy" alt="Bar chart of percent female victims by offense type; rape 98 percent, sex crimes 82 percent, harassment 59 percent"><figcaption><b>Fig. 7</b> — % female victims by offense type. Rape 98%, sex crimes 82%, harassment 59%.</figcaption></figure>
+      <figure class="plate"><img src="assets/fig08.png" loading="lazy" alt="Bar chart of percent of incidents occurring in darkness by offense type; rape 67 percent, robbery 56 percent, motor vehicle theft 51 percent"><figcaption><b>Fig. 8</b> — % of incidents occurring in darkness, by offense type.</figcaption></figure>
+    </div>
+    <div class="narrow">
+      <p>A consistent seasonal pattern holds over the five-year period: offenses increase in spring and peak from late May to early October, and the upward trend persists despite the seasonality. The seasonal Mann-Kendall test yields τ = 0.650 (p &lt; 0.001) — the entire seasonal profile has shifted upward annually.</p>
+    </div>
+    <figure class="plate fig-single"><img src="assets/fig09.png" loading="lazy" alt="Daily time series of public-space incidents from 2021 to 2025 showing seasonal peaks and an upward trend"><figcaption><b>Fig. 9</b> — Daily incidents, 2021–2025. Seasonal peaks on a rising baseline (seasonal Mann-Kendall τ = 0.650).</figcaption></figure>
+  </div>
+</section>
+
+<div class="dusk reverse" aria-hidden="true"><span class="tag">civil dawn</span></div>
+
+<!-- ================= 4. WHAT CORRELATES (day) ================= -->
+<section class="day">
+  <div class="wrap">
+    <div class="narrow">
+      <p class="eyebrow">04 · What correlates</p>
+      <h2>What survives spatial correction</h2>
+      <p>Bivariate correlations are confounded: streetlight outages rise with street length (r = 0.62) and tract area (r = 0.52), and renter share is entangled with subway distance (r = −0.58) and poverty (r = 0.55). Tract counts are also severely overdispersed (variance-to-mean ratio: 166), and the aspatial negative binomial model leaves spatially autocorrelated residuals (Moran's I = 0.164). Adding a Markov random field smooth over the tract adjacency graph eliminates the spatial dependence (residual I = −0.034, p = 0.997) and raises deviance explained to 73.9%.</p>
+      <p>In the spatial model, per one standard deviation of each predictor:</p>
+    </div>
+    <div class="chips narrow" role="list">
+      <span class="chip" role="listitem"><i style="background:var(--female)"></i><span><span class="v">IRR 0.65</span> subway distance — the largest association in magnitude</span></span>
+      <span class="chip" role="listitem"><i style="background:var(--day)"></i><span><span class="v">IRR 1.20</span> streetlight outages — the largest positive association</span></span>
+      <span class="chip" role="listitem"><i style="background:var(--peri)"></i><span><span class="v">IRR 0.89</span> sidewalk defects — negative, as are vacant land (0.93) and vacant buildings (0.95)</span></span>
+    </div>
+    <figure class="plate fig-single"><img src="assets/fig11.png" loading="lazy" alt="Forest plot of incidence rate ratios per standard deviation for each predictor with 95 percent confidence intervals"><figcaption><b>Fig. 11</b> — Incidence rate ratios per 1 SD, spatial negative binomial model. Deviance explained 73.9%.</figcaption></figure>
+    <div class="narrow">
+      <p>Renter share (IRR 1.13), housing vacancy (1.11), and poor pavement (1.09) are also positively associated with incident rates. Indicators of deterioration are negatively associated or show no association — and since these are built from 311 complaints and administrative filings, tract-level incident counts measure reported offenses, and reporting propensity may vary across places and offense types.</p>
+      <p>The model refit on female-victim incidents, with the resident female population as exposure, returns coefficients similar in sign and magnitude — the largest difference across the eight predictors is 0.027 (sidewalk defects). The female sexual-offense model returns no coefficient distinguishable from zero: sexual offenses are about 2% of incidents, and the intervals are correspondingly wide.</p>
+    </div>
+  </div>
+</section>
+
+<div class="dusk" aria-hidden="true"><span class="tag">civil dusk</span></div>
+
+<!-- ================= 5. THE PANEL TEST (night) ================= -->
+<section class="night">
+  <div class="wrap">
+    <div class="narrow">
+      <p class="eyebrow">05 · The panel test</p>
+      <h2>Temporary darkness has no detectable effect within tracts</h2>
+      <p>The cross-section says tracts with more streetlight outages record more incidents. The panel asks whether a tract's incident count moves when its own lighting changes: a fixed-effects Poisson model over 2,228 tracts × 59 months, with each outage weighted by the number of days it remains open in the month.</p>
+      <p>The pooled model, without tract fixed effects, returns positive and significant coefficients for all four own-tract darkness lags (contemporaneous β = 0.050). With tract, year, and calendar-month fixed effects, no own-tract coefficient differs from zero (contemporaneous β = 0.001, p = 0.74). An event study around closures of outages lasting at least 30 days shows no association at the lead or any of the four event-time terms (all p &gt; 0.14) — and the design can exclude closure effects larger than approximately ±1.3% per month.</p>
+    </div>
+    <div class="figrow">
+      <figure class="plate"><img src="assets/fig12.png" loading="lazy" alt="Coefficient plot of dark lamp-day effects by lag, pooled versus fixed-effects Poisson; fixed-effects estimates are null"><figcaption><b>Fig. 12</b> — Own-tract darkness by lag: pooled vs. fixed-effects Poisson. The association vanishes within tracts.</figcaption></figure>
+      <figure class="plate"><img src="assets/fig13.png" loading="lazy" alt="Event study of incident counts in the months before and after repair of a sustained streetlight outage; all coefficients near zero"><figcaption><b>Fig. 13</b> — Incidents around the closure of a sustained (30+ day) outage. All terms p &gt; 0.14.</figcaption></figure>
+    </div>
+    <div class="callout narrow">
+      The association between streetlighting and incidents is attributable to long-term differences between tracts.
+      <span class="k">Consistent with experimental evidence: a tactical high-dosage lighting intervention reduced crime in NYC public housing (Chalfin et al. 2022), while minor outages showed no effect at street-segment scale in Chicago (Chalfin, Kaplan &amp; LaForest 2022).</span>
+    </div>
+  </div>
+</section>
+
+<div class="dusk reverse" aria-hidden="true"><span class="tag">civil dawn</span></div>
+
+<!-- ================= 6. CONCLUSION (day) ================= -->
+<section class="day">
+  <div class="wrap narrow">
+    <p class="eyebrow">06 · What it means</p>
+    <h2>Shared geography, gendered timing</h2>
+    <p>The environmental factors linked to female victims are the same as those for overall victims, so avoiding certain places only addresses part of the risk women face. What stands out as gendered in these data is the timing and type of offenses. The crimes that mostly affect women also happen most often in darkness — so the risk after dark, and the importance of infrastructure that improves visibility at night, fall mainly on women.</p>
+    <p>At the same time, fixing infrastructural problems should not be expected to reduce incident counts the next month. Testing these conclusions further will need data on the number of people present, more detailed spatial units for offenses, and studies of long-term infrastructure changes beyond this panel's scope.</p>
+    <p style="font-family:var(--mono);font-size:.82rem;color:var(--ink-soft)">Full paper and the original 2023 capstone: <a href="https://github.com/cyber-hbliu/infrastructure_vs_public_offense_MUSACAPSTONE">github.com/cyber-hbliu/infrastructure_vs_public_offense_MUSACAPSTONE</a></p>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>Methods</h4>
+        <p>Cross-section: negative binomial model with a Markov random field smooth over the tract adjacency graph, resident population as exposure offset (female population for female-victim models). Panel: fixed-effects Poisson, 2,228 tracts × 59 months, outages weighted by days open, with tract, year, and calendar-month fixed effects and tract-clustered standard errors. Built in R.</p>
+        <p>Data: NYPD complaints, NYC 311, DOT pavement ratings, DOB complaints via 311, PLUTO, MTA subway stations, Census ACS 2020–2024.</p>
+      </div>
+      <div>
+        <h4>Author</h4>
+        <p>Hebe Liu<br>Research Analyst, Philadelphia Works<br>MUSA, University of Pennsylvania</p>
+        <p><a href="https://www.cyberhbl.com">cyberhbl.com</a><br><a href="mailto:cyberhebe@gmail.com">cyberhebe@gmail.com</a><br><a href="https://github.com/cyber-hbliu">github.com/cyber-hbliu</a></p>
+      </div>
+      <div>
+        <h4>References</h4>
+        <div class="refs">
+          <p>Chalfin, Hansen, Lerner &amp; Parker (2022). <em>J. Quantitative Criminology</em> 38(1).</p>
+          <p>Chalfin, Kaplan &amp; LaForest (2022). <em>J. Quantitative Criminology</em> 38(4).</p>
+          <p>Elkin (2022). ONS, Great Britain.</p>
+          <p>Koskela (1997). <em>Gender, Place &amp; Culture</em> 4(3).</p>
+          <p>Ouali, Graham, Barron &amp; Trompet (2020). <em>JRSS-A</em> 183(3).</p>
+          <p>Valentine (1989). <em>Area</em> 21(4).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var steps = document.querySelectorAll('.step');
+  var frames = document.querySelectorAll('.scrolly .frame img');
+  var cap = document.getElementById('scrolly-cap');
+  if(!('IntersectionObserver' in window) || !steps.length) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        steps.forEach(function(s){s.classList.remove('on')});
+        e.target.classList.add('on');
+        var i = +e.target.dataset.fig;
+        frames.forEach(function(img,j){img.classList.toggle('on', j===i)});
+        if(cap && frames[i]) cap.innerHTML = frames[i].dataset.cap;
+      }
+    });
+  },{rootMargin:'-42% 0px -42% 0px'});
+  steps.forEach(function(s){io.observe(s)});
+})();
+</script>
+</body>
+</html>
