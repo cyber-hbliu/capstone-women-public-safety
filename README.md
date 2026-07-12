@@ -7,9 +7,9 @@ The analysis covers 396,876 public-space incidents with recorded person victims 
 
 # The update has three parts
 
-Exploratory spatial analysis. Global Moran's I, LISA, Getis-Ord Gi*, and a seasonal Mann-Kendall trend test. Incidents cluster strongly (Moran's I = 0.510) along a single connected corridor from the South Bronx through Harlem to Midtown, and the entire seasonal profile has shifted upward year over year (τ = 0.650).
-Cross-sectional inference. A negative binomial model with a Markov random field smooth over the tract adjacency graph, which removes the spatial autocorrelation that an aspatial model leaves in its residuals. Subway distance shows the largest association (IRR 0.65 per SD), streetlight outages the largest positive one (IRR 1.20). The same model refit on female-victim incidents returns nearly identical coefficients.
-Panel inference. A fixed-effects Poisson model over 2,228 tracts × 59 months tests whether within-tract changes in darkness change incident counts, plus an event study around the repair of outages lasting 30+ days.
+- Exploratory spatial analysis. Global Moran's I, LISA, Getis-Ord Gi*, and a seasonal Mann-Kendall trend test. Incidents cluster strongly (Moran's I = 0.510) along a single connected corridor from the South Bronx through Harlem to Midtown, and the entire seasonal profile has shifted upward year over year (τ = 0.650).
+- Cross-sectional inference. A negative binomial model with a Markov random field smooth over the tract adjacency graph, which removes the spatial autocorrelation that an aspatial model leaves in its residuals. Subway distance shows the largest association (IRR 0.65 per SD), streetlight outages the largest positive one (IRR 1.20). The same model refit on female-victim incidents returns nearly identical coefficients.
+- Panel inference. A fixed-effects Poisson model over 2,228 tracts × 59 months tests whether within-tract changes in darkness change incident counts, plus an event study around the repair of outages lasting 30+ days.
 
 
 # What changed in the conclusions
