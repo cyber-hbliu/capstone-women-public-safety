@@ -1,7 +1,5 @@
-# Update: Infrastructure Conditions and the Spatial Distribution of Public-Space Offenses in New York City, 2021–2025
+# [Website](https://cyber-hbliu.github.io/infrastructure_vs_public_offense_MUSACAPSTONE/): Infrastructure Conditions and the Spatial Distribution of Public-Space Offenses in New York City, 2021–2025
 Three years after the capstone, I rebuilt this project from the ground up. The original study asked whether infrastructure conditions correlate with violence against women in public spaces and addressed this using KDE, KNN, and Random Forest. The rebuilt study asks a harder version of the same question: which of those correlations survive spatial correction, whether the correlates of female-victim incidents actually differ from those of everyone else's, and whether changes in lighting affect incident counts at all.
-
-# [Website](https://cyber-hbliu.github.io/infrastructure_vs_public_offense_MUSACAPSTONE/) 
 
 # What's new
 
